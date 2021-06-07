@@ -1,0 +1,19 @@
+form.payzone-form{
+  
+}
+form.payzone-form section{
+    float:left;
+}
+
+form.payzone-form section.w-100{
+    width:100%;
+}
+
+form.payzone-form section label{
+    float:left;
+    margin:0.333rem;
+}
+form.payzone-form section input{
+    display:block;
+}
+

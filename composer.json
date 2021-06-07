@@ -1,0 +1,23 @@
+{
+    "name": "svodya/payzone",
+    "description": "This package is payment integration for laravel7 users.",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Svodya\\Payzone\\": "src/"
+        },
+        "files": [
+            "src/PaymentBuilder.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Svodya\\Payzone\\PayzoneServiceProvider"
+            ]
+        }
+    }
+}
