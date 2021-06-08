@@ -77,8 +77,6 @@ class PaymentBuilder extends PaymentDebug{
             case config('payzone.DECLINED'): //Transaction Declined
                 break;
             case config('payzone.DUPLICATE'): //Duplicate Transaction
-                //$transactionresult->getPreviousMessage() //as above but for previous / duplicate transaction
-                //$transactionresult->getPreviousStatusCode() //as above but for previous / duplicate transaction
                 break;
             case config('payzone.ERROR'): //Unknown Error
             default:

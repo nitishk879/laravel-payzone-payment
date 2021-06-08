@@ -48,7 +48,7 @@ class PurchaseOrderInitialized extends Notification
     {
         $url = url('/orders/'.$this->order->id);
         return (new MailMessage)
-            ->greeting('Hello!')
+            ->greeting('Hello! ' . $this->order->customer->name)
             ->subject('Purchase Order has been generated')
             ->line('An Order has been initialised')
             ->line('Order Id: ' . $this->order->id)

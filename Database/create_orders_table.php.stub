@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('amount');
             $table->string('status_code');
             $table->string('currency_code');
+            $table->unsignedBigInteger('customer_id');
             $table->timestamps();
         });
     }

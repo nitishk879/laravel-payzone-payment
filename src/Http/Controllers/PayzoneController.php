@@ -30,11 +30,12 @@ class PayzoneController extends Controller
     {
         $checkout = $request->session()->has('cart') ? $request->session()->get('cart') : '';
 
-        if($checkout!=null){
-            $this->generateOrder($checkout);
-            $order = Order::latest()->first();
-            event(new OrderShipped($order));
+        if($checkout==null){
+            return redirect('/')->with("error", "You don't have any product in your cart");
         }
+
+        $this->generateOrder($checkout);
+        $order = Order::latest()->first();
 
         $integrationType = $this->integrationType;
         $transactionType = $this->transactionType;
@@ -44,8 +45,10 @@ class PayzoneController extends Controller
 
     public function process(Request $request)
     {
+
         $integrationType = $this->integrationType;
         $paymentBuilder = new PaymentBuilder;
+
         switch ($this->integrationType) {
             case 'hosted':
                 //Generate the string to hash from the demo cart payment variables
@@ -80,7 +83,6 @@ class PayzoneController extends Controller
                 break;
             case 'direct':
                 if(!isset($request->PaRes) && !isset($request->PaReq)) {
-                    //Generate the string to hash from the demo cart payment variables
                     $stringToHash = PaymentHelper::generateStringToHash_DirectForm(
                         $request->Amount,
                         $request->CurrencyCode,
@@ -91,13 +93,12 @@ class PayzoneController extends Controller
                     );
                     //Process direct API Transaction
                     $processed = PaymentHelper::processDirectTransaction($transactionResult, $errorMsg);
-
                     $this->newCustomer($request);
 
                 }
-                elseif (isset($request->PaRes)) {
-                    $stringToHash = PaymentHelper::generateStringToHash_Direct3d($_POST['MD'], $_POST['PaRes']);
-                    $processed = PaymentHelper::processDirect3DTransaction($transactionResult, $errorMsg, $_POST['MD'], $_POST['PaRes']);
+                elseif(isset($request->PaRes)) {
+                    $stringToHash = PaymentHelper::generateStringToHash_Direct3d($request->MD, $request->PaRes);
+                    $processed = PaymentHelper::processDirect3DTransaction($transactionResult, $errorMsg, $request->MD, $request->PaRes);
                 }
                 else {
                     $processed = false;
@@ -155,21 +156,20 @@ class PayzoneController extends Controller
                         $hashdigest = $paymentHelper::generateHashDigest($stringtohash, config('payzone.merchantKey'), $hashmethod);
                         $errors = ""; //manually override hash validation to send hashdigest into form for submission
                     } else {
-                        //validate the transaction and passes back the $hashdigest for further checks, $transactionresult object and $errors
-                        //validate also returns a boolean response - true for validated, false for error
                         $validated = $paymentHelper::validateResponseTransparent($_POST, $hashdigest, $transactionresult, $errors);
                     }
                     if ($validated) {
-                        //This is just a dummy function - this would usually the be merchatns CMS/ DB or Order system
-                        $saved = $paymentBuilder->passToMerchantSystem($transactionresult);
+                        $paymentBuilder->passToMerchantSystem($transactionresult);
                     }
                     //End of transparent
                     break;
                 case 'direct':
                     $validated = $paymentHelper::validateResponseDirect($_POST, $hashdigest, $transactionresult, $errors);
                     if ($validated) {
-                        $saved = $paymentBuilder->passToMerchantSystem($transactionresult);
-                        $this->updateOrCreateOrder($transactionresult);
+                        $paymentBuilder->passToMerchantSystem($transactionresult);
+                        $this->updateOrCreateOrder($request);
+                        $request->session()->forget('cart');
+                        $request->session()->flush();
                     }
                     break;
                 default:
@@ -181,8 +181,7 @@ class PayzoneController extends Controller
         return view('Payzone::callback', compact('validated', 'transactionresult', 'errors'));
     }
 
-    public function callbackServer(Request $request)
-    {
+    public function callbackServer(Request $request){
         $paymentHelper = new PaymentHelper();
         $paymentBuilder = new PaymentBuilder;
 
@@ -231,57 +230,68 @@ class PayzoneController extends Controller
         return view('Payzone::debug', compact('PayzoneDebug', "PayzoneHelper"));
     }
 
-    public function generateOrder($checkout)
+    /**
+     * Generate New order
+     * @param $order
+     *
+     * @return Order
+     */
+    public function generateOrder($order)
     {
         $lastOrder  = Order::latest()->firstOrFail();
 
-        $description = collect($checkout)->flatten(1)->values()->flatten()->whereNotNull('title')->values();
+        $description = collect($order)->flatten(1)->values()->flatten()->whereNotNull('title')->values();
 
         return Order::firstOrCreate([
-            'amount' => $checkout->totalPrice,
+            'amount' => $order->totalPrice,
             'product_detail' => $description->implode('title', ', '),
         ],
             [
                 'order_id' => $lastOrder->id + 1,
                 'cross_reference' => 'cross_reference',
                 'product_detail' => $description->implode('title', ', '),
-                'amount' => $checkout->totalPrice,
+                'amount' => $order->totalPrice,
                 'status_code' => '',
                 'currency_code' => config('payzone.currencyCode')
             ]);
     }
 
-    public function newCustomer($request)
+    /**
+     * Add new Customer
+     * @param $customer
+     * @return Customer
+    */
+    public function newCustomer($customer)
     {
-        /**
-         * "CustomerName":"Geoff Wayne","Address1":"113 Broad Street West","Address2":null,"Address3":null,"Address4":null,
-         * "City":"Oldpine","State":"Strongbarrow","PostCode":"SB42 1SX","CountryCode":"826",
-         * "CardName":"Geoff Wayne","CardNumber":"4976350000006891","CV2":"341","ExpiryDateMonth":"1","ExpiryDateYear":"25"}
-        */
         return Customer::firstOrCreate([
-            'name' => $request->CustomerName,
-            'address' => $request->Address1,
+            'name' => $customer->CustomerName,
+            'address' => $customer->Address1,
         ],
             [
-                'name' => $request->CustomerName,
-                'city' => $request->City,
-                'address' => $request->Address1,
-                'state' => $request->State,
-                'postcode' => $request->PostCode,
-                'country' => $request->CountryCode,
+                'name' => $customer->CustomerName,
+                'city' => $customer->City,
+                'address' => $customer->Address1,
+                'state' => $customer->State,
+                'postcode' => $customer->PostCode,
+                'country' => $customer->CountryCode,
             ]);
     }
 
+    /**
+     * Add or Update Order
+     * @param $result
+     *
+    */
     public function updateOrCreateOrder($result){
-        return Order::updateOrCreate([
+        $order =  Order::updateOrCreate([
             'order_id' => $result->OrderID
         ],
             [
-                'order_id' => $result->OrderID,
                 'cross_reference' => $result->CrossReference,
-                'product_detail' => $result->OrderDescription,
                 'amount' => $result->Amount,
-                'status_code' => $result->Amount
+                'status_code' => $result->StatusCode
             ]);
+
+        event(new OrderShipped($order));
     }
 }

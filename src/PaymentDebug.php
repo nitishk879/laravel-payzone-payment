@@ -62,7 +62,7 @@ class PaymentDebug
         self::$DisplayErrorsLevel = ini_get('error_reporting');
         self::$LogErrors          = ini_get('log_errors');
         self::$LogErrorsLocation  = ini_get('error_log');
-        self::$CustomErrorsLocation  = __DIR__ . '\payzone.log';
+        self::$CustomErrorsLocation     = storage_path("/logs/payzone.log");
         self::$CustomErrorsLocationUrl  = storage_path('logs/payzone.log');
     }
 
@@ -236,7 +236,7 @@ class PaymentDebug
 
     public static function getCustomLogs()
     {
-        $logfile = dirname(__FILE__) . '\payzone.log';
+        $logfile = storage_path("/logs/payzone.log");
         $log = '';
         if (file_exists($logfile)) {
             $file = new \SplFileObject($logfile, 'r');

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'debugMode' => true,
+    'debugMode' => false,
     'merchantId' => env('PAYZONE_MERCHANT_ID'),
     'merchantPass' => env('PAYZONE_MERCHANT_PASS'),
     'merchantKey' => env('PAYZONE_MERCHANT_KEY'),

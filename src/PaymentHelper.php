@@ -694,9 +694,6 @@ class PaymentHelper
                 $curlResponse = simplexml_load_string($curlResponse);
                 $statusCode =$curlResponse->CardDetailsTransactionResponse->CardDetailsTransactionResult->StatusCode ? $curlResponse->CardDetailsTransactionResponse->CardDetailsTransactionResult->StatusCode : 999;
                 $xmlResponseArray = self::parseXmltoArray($curlResponse->CardDetailsTransactionResponse, $orderarray, 'direct');
-
-
-
                 switch ($statusCode) {
                     case 30:
                         $errorOccured = true;
