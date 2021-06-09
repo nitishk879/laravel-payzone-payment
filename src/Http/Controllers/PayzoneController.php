@@ -90,8 +90,6 @@ class PayzoneController extends Controller
                     );
                     //Process direct API Transaction
                     $processed = PaymentHelper::processDirectTransaction($transactionResult, $errorMsg);
-                    $this->newCustomer($request);
-
                 }
                 elseif(isset($request->PaRes)) {
                     $stringToHash = PaymentHelper::generateStringToHash_Direct3d($request->MD, $request->PaRes);
@@ -164,7 +162,8 @@ class PayzoneController extends Controller
                     $validated = $paymentHelper::validateResponseDirect($_POST, $hashdigest, $transactionresult, $errors);
                     if ($validated) {
                         $paymentBuilder->passToMerchantSystem($transactionresult);
-                        $this->updateOrCreateOrder($request);
+                        $customer = $this->newCustomer($request);
+                        $this->updateOrCreateOrder($request, $customer);
                         $request->session()->forget('cart');
                         $request->session()->flush();
                     }
@@ -255,6 +254,7 @@ class PayzoneController extends Controller
     /**
      * Add new Customer
      * @param $customer
+     * @param $order
      * @return Customer
     */
     public function newCustomer($customer)
@@ -268,8 +268,8 @@ class PayzoneController extends Controller
             [
                 'first_name' => $firstName ?? $customer->CustomerName,
                 'last_name' => $lastName ?? null,
-                'email' => $customer->Email ?? null,
-                'phone' => $customer->Phone ?? null,
+                'email' => $customer->EmailAddress ?? null,
+                'phone' => $customer->PhoneNumber ?? null,
                 'address_line_1' => $customer->Address1,
                 'address_line_2' => $customer->Address2,
                 'city' => $customer->City,
@@ -283,17 +283,30 @@ class PayzoneController extends Controller
     /**
      * Add or Update Order
      * @param $result
+     * @param $customer
      *
     */
-    public function updateOrCreateOrder($result){
+    public function updateOrCreateOrder($result, $customer){
+        $status = collect(array(
+            "SUCCESSFUL"        => 0,
+            "THREEDREQUIRED"    => 3,
+            "REFERRED"          => 4,
+            "DECLINED"          => 5,
+            "DUPLICATE"         => 20,
+            "ERROR"             => 30,
+        ));
 
         Order::updateOrCreate([
             'id' => $result->OrderID
         ],
             [
                 'cross_reference' => $result->CrossReference,
+                'order_price' => $result->Amount,
                 'total_price' => $result->Amount/100,
-                'order_status' => $result->StatusCode
+                'order_type'    => 'buy',
+                'order_status' => $status->search($result->StatusCode),
+                'order_details' => $result->OrderDescription,
+                'customer_id'   => $customer->id
             ]);
 
         $order = Order::find($result->OrderID);
