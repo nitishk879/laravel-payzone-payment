@@ -3,6 +3,7 @@
 namespace Svodya\Payzone;
 
 use Illuminate\Support\ServiceProvider;
+use Svodya\Payzone\Providers\EventServiceProvider;
 
 class PayzoneServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,7 @@ class PayzoneServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**

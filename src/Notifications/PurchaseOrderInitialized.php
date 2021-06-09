@@ -2,11 +2,11 @@
 
 namespace Svodya\Payzone\Notifications;
 
-use App\Order;
+
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Svodya\Payzone\Models\Order;
 
 class PurchaseOrderInitialized extends Notification
 {

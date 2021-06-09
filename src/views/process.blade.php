@@ -19,10 +19,8 @@
                 @case('direct')
                     @if ($processed)
                         @if ($transactionResult->getStatusCode() === '3')
-                            Status code 3 is working
                             @include('Payzone::direct-three-d-secure')
                         @else
-                            After Status code 3
                             @include('Payzone::direct-paymentform')
                         @endif
                     @endif

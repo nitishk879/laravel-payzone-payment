@@ -43,8 +43,8 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">Status</div>
-                                            <div class="text-sm text-green-500">{{ $transactionresult->getStatusCode() }} {{ $transactionresult->getTransactionOutcome() }} </div>
+                                            <div class="text-sm text-gray-900">Status Code</div>
+                                            <div class="text-sm text-green-500">{{ $transactionresult->getStatusCode() }}</div>
                                         </td>
                                     </tr>
                                 @endif
@@ -63,7 +63,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">Transaction Outcome</div>
-                                        <div class="text-sm text-gray-500">{{ $transactionresult->getTransactionOutcome() }}</div>
+                                        <div class="text-sm @if($transactionresult->getStatusCode()!=0) text-red-500 @else text-green-500 @endif">{{ $transactionresult->getTransactionOutcome() }}</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -73,15 +73,15 @@
                                                 <div class="text-sm font-medium text-gray-900">
                                                     Outcome Detail
                                                 </div>
-                                                <div class="text-sm @if($transactionresult->getStatusCode()!==0) text-red-500 @else text-green-500 @endif">
+                                                <div class="text-sm @if($transactionresult->getStatusCode()!=0) text-red-500 @else text-green-500 @endif">
                                                     {{ $transactionresult->getTransactionOutcomeDetail() }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">Transaction Outcome</div>
-                                        <div class="text-sm @if($transactionresult->getStatusCode()!==0) text-red-500 @else text-green-500 @endif">{{ $transactionresult->getOrderID() }}</div>
+                                        <div class="text-sm text-gray-900">Order ID</div>
+                                        <div class="text-sm @if($transactionresult->getStatusCode()!=0) text-red-500 @else text-green-500 @endif">{{ $transactionresult->getOrderID() }}</div>
                                     </td>
                                 </tr>
                                 </tbody>

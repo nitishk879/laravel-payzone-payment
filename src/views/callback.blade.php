@@ -1,7 +1,7 @@
 @extends('Payzone::layout')
 
 @section('header')
-    {{ __("Call back Page") }}
+    {{ __("Thank you") }}
 @endsection
 
 @section('content')

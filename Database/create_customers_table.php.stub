@@ -15,12 +15,17 @@ class CreateCustomersTable extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
+            $table->string('first_name');
+            $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address_line_1');
+            $table->string('address_line_2')->nullable();
             $table->string('city');
-            $table->string('state');
-            $table->string('postcode');
-            $table->string('country');
+            $table->string('county')->default(826);
+            $table->string('country')->default('UK');
+            $table->string('postal_code');
+            $table->string('payment_method')->default('direct');
             $table->timestamps();
         });
     }

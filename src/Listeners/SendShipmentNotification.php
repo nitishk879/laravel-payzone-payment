@@ -2,11 +2,10 @@
 
 namespace Svodya\Payzone\Listeners;
 
-use App\Events\OrderShipped;
 use App\Notifications\PurchaseOrderInitialized;
 use App\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Notification;
+use Svodya\Payzone\Events\OrderShipped;
 
 class SendShipmentNotification
 {

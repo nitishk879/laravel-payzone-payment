@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => ['web'], 'namespace' => 'Svodya\Payzone\Http\Controllers'], function (){
-    Route::get('payzone', 'PayzoneController@payment');
+    Route::get('payzone', 'PayzoneController@payment')->name('payzone');
     Route::post('callback', 'PayzoneController@callback');
 });
 

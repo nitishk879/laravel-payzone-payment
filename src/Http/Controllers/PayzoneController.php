@@ -4,7 +4,8 @@ namespace Svodya\Payzone\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Svodya\Payzone\Events\OrderShipped;
+use Illuminate\Support\Facades\Mail;
+use Svodya\Payzone\Mail\OrderShipped;
 use Svodya\Payzone\Models\Customer;
 use Svodya\Payzone\Models\Order;
 use Svodya\Payzone\PaymentBuilder;
@@ -34,13 +35,9 @@ class PayzoneController extends Controller
             return redirect('/')->with("error", "You don't have any product in your cart");
         }
 
-        $this->generateOrder($checkout);
-        $order = Order::latest()->first();
+        $order = $this->generateOrder($checkout);
 
-        $integrationType = $this->integrationType;
-        $transactionType = $this->transactionType;
-
-        return view('Payzone::payzone', compact('integrationType', 'transactionType', 'checkout', 'order'));
+        return view('Payzone::payzone', compact('order'));
     }
 
     public function process(Request $request)
@@ -238,21 +235,20 @@ class PayzoneController extends Controller
      */
     public function generateOrder($order)
     {
-        $lastOrder  = Order::latest()->firstOrFail();
-
         $description = collect($order)->flatten(1)->values()->flatten()->whereNotNull('title')->values();
 
         return Order::firstOrCreate([
-            'amount' => $order->totalPrice,
-            'product_detail' => $description->implode('title', ', '),
+            'total_price' => $order->totalPrice,
+            'order_details' => $description->implode('title', ', '),
         ],
             [
-                'order_id' => $lastOrder->id + 1,
+                'order_status' => 'process',
+                'order_price' => $order->totalPrice*100,
+                'order_type' => 'buy',
+                'total_price' => $order->totalPrice,
+                'order_details' => $description->implode('title', ', '),
                 'cross_reference' => 'cross_reference',
-                'product_detail' => $description->implode('title', ', '),
-                'amount' => $order->totalPrice,
-                'status_code' => '',
-                'currency_code' => config('payzone.currencyCode')
+                'customer_id' => 1
             ]);
     }
 
@@ -263,17 +259,24 @@ class PayzoneController extends Controller
     */
     public function newCustomer($customer)
     {
+        $firstName = strstr($customer->CustomerName, ' ', true) ?? null;
+        $lastName = strstr($customer->CustomerName, ' ', false) ?? null;
         return Customer::firstOrCreate([
-            'name' => $customer->CustomerName,
-            'address' => $customer->Address1,
+            'first_name' => $firstName,
+            'address_line_1' => $customer->Address1,
         ],
             [
-                'name' => $customer->CustomerName,
+                'first_name' => $firstName ?? $customer->CustomerName,
+                'last_name' => $lastName ?? null,
+                'email' => $customer->Email ?? null,
+                'phone' => $customer->Phone ?? null,
+                'address_line_1' => $customer->Address1,
+                'address_line_2' => $customer->Address2,
                 'city' => $customer->City,
-                'address' => $customer->Address1,
-                'state' => $customer->State,
-                'postcode' => $customer->PostCode,
+                'county' => $customer->State,
+                'postal_code' => $customer->PostCode,
                 'country' => $customer->CountryCode,
+                'payment_method'    => $customer->Direct ?? 'direct'
             ]);
     }
 
@@ -283,15 +286,20 @@ class PayzoneController extends Controller
      *
     */
     public function updateOrCreateOrder($result){
-        $order =  Order::updateOrCreate([
-            'order_id' => $result->OrderID
+
+        Order::updateOrCreate([
+            'id' => $result->OrderID
         ],
             [
                 'cross_reference' => $result->CrossReference,
-                'amount' => $result->Amount,
-                'status_code' => $result->StatusCode
+                'total_price' => $result->Amount/100,
+                'order_status' => $result->StatusCode
             ]);
 
-        event(new OrderShipped($order));
+        $order = Order::find($result->OrderID);
+
+        Mail::to('nitishk879@gmail.com')->send(new OrderShipped($order));
+
+//        event(new OrderShipped($order));
     }
 }

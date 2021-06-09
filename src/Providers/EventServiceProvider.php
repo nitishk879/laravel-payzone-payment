@@ -3,8 +3,8 @@
 
 namespace Svodya\Payzone\Providers;
 
-use Svodya\Payzone\Events\OrderShipped;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Svodya\Payzone\Events\OrderShipped;
 use Svodya\Payzone\Listeners\SendShipmentNotification;
 
 
