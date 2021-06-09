@@ -298,7 +298,7 @@ class PayzoneController extends Controller
 
         $order = Order::find($result->OrderID);
 
-        Mail::to('nitishk879@gmail.com')->send(new OrderShipped($order));
+        Mail::to(config('mail.from.address'))->send(new OrderShipped($order));
 
 //        event(new OrderShipped($order));
     }
