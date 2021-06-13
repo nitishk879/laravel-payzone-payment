@@ -23,10 +23,10 @@
     <input type="hidden" name="Address2" value="{{  $transactionResult->getAddress2() }}">
     <input type="hidden" name="Address3" value="{{ $transactionResult->getAddress3() }}">
     <input type="hidden" name="Address4" value="{{  $transactionResult->getAddress4() }}">
-    <input type="hidden" name="City" value="{{  $transactionResult->getCity() ?? config('payzone.address1') }}">
-    <input type="hidden" name="State" value="{{  $transactionResult->getState() ?? config('payzone.address1') }}">
-    <input type="hidden" name="PostCode" value="{{  $transactionResult->getPostCode() ?? config('payzone.address1') }}">
-    <input type="hidden" name="CountryCode" value="{{  $transactionResult->getCountryCode() ?? config('payzone.address1') }}">
+    <input type="hidden" name="City" value="{{  $transactionResult->getCity() ?? config('payzone.city') }}">
+    <input type="hidden" name="State" value="{{  $transactionResult->getState() ?? config('payzone.state') }}">
+    <input type="hidden" name="PostCode" value="{{  $transactionResult->getPostCode() ?? config('payzone.postcode') }}">
+    <input type="hidden" name="CountryCode" value="{{  $transactionResult->getCountryCode() ?? config('payzone.countrycode') }}">
 
     <!-- Response options -->
     <input type="hidden" name="AddressNumericCheckResult" value="{{  $transactionResult->getAddressNumericCheckResult() }}">

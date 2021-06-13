@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => ['web'], 'namespace' => 'Svodya\Payzone\Http\Controllers'], function (){
+    // Payzone Route is only if you are not passing checkout variables directly to process
     Route::get('payzone', 'PayzoneController@payment')->name('payzone');
+    // Callback use Request
     Route::post('callback', 'PayzoneController@callback');
 });
 

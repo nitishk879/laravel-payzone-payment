@@ -54,8 +54,6 @@ return [
     "DUPLICATE"         => 20,
     "ERROR"             => 30,
 
-    'testMode' => true,
-
     //OrderDetails
     "amt" => rand(0, 9999),
     "orderid" => 'Order-' . rand(0, 999),

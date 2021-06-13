@@ -9,7 +9,7 @@ class PaymentHelper
 
     #region class variables
     /**
-    Declare class variables
+     * Declare class variables
      */
     //Global Config
     private static $debug_mode;
@@ -53,7 +53,7 @@ class PaymentHelper
     {
 
         /**
-        Set values for class variables
+         * Set values for class variables
          */
 
         // urls and handlers
@@ -62,26 +62,26 @@ class PaymentHelper
         //self::$callbackurl              = self::getSiteUrl()."/callback.php";
 
         //Hosted Payment form Config Settings
-        self::$echoavs                             = 'true';
-        self::$echocv2                             = 'true';
-        self::$echothreed                          = 'true';
-        self::$echocardtype                        = 'true';
-        self::$cv2mandatory                        = 'true';
-        self::$address1mandatory                   = 'true';
-        self::$citymandatory                       = 'true';
-        self::$postcodemandatory                   = 'true';
-        self::$statemandatory                      = 'true';
-        self::$countrymandatory                    = 'true';
-        self::$paymentformsdisplaysresult          = 'false';
-        self::$serverresulturlformvariables        = "";
-        self::$serverresulturlcookievariables      = "";
+        self::$echoavs = 'true';
+        self::$echocv2 = 'true';
+        self::$echothreed = 'true';
+        self::$echocardtype = 'true';
+        self::$cv2mandatory = 'true';
+        self::$address1mandatory = 'true';
+        self::$citymandatory = 'true';
+        self::$postcodemandatory = 'true';
+        self::$statemandatory = 'true';
+        self::$countrymandatory = 'true';
+        self::$paymentformsdisplaysresult = 'false';
+        self::$serverresulturlformvariables = "";
+        self::$serverresulturlcookievariables = "";
         self::$serverresulturlquerystringvariables = "";
     }
     #endregion
 
     #region getter / setters
     /**
-    Getter functions for class variables
+     * Getter functions for class variables
      */
 
     //Global Config
@@ -89,6 +89,7 @@ class PaymentHelper
     {
         return self::$debug_mode;
     }
+
     public function setDebugMode($debug_mode)
     {
         self::$debug_mode = $debug_mode;
@@ -98,6 +99,7 @@ class PaymentHelper
     {
         return self::$integrationmethod;
     }
+
     public function setIntegrationMethod($integrationmethod)
     {
         self::$integrationmethod = $integrationmethod;
@@ -109,30 +111,37 @@ class PaymentHelper
     {
         return self::$merchantid;
     }
+
     public function setMerchantId($mid)
     {
         self::$merchantid = $mid;
     }
+
     public static function getMerchantPassword()
     {
         return self::$merchantpassword;
     }
+
     public function setMerchantPassword($merchantpassword)
     {
         self::$merchantpassword = $merchantpassword;
     }
+
     public static function getPresharedKey()
     {
         return self::$presharedkey;
     }
+
     public function setPresharedKey($presharedkey)
     {
         self::$presharedkey = $presharedkey;
     }
+
     public static function getHashMethod()
     {
         return self::$hashmethod;
     }
+
     public function setHashMethod($hashmethod)
     {
         self::$hashmethod = $hashmethod;
@@ -143,30 +152,37 @@ class PaymentHelper
     {
         return self::$serverresulturl;
     }
+
     public function setServerResultUrl($serverresulturl)
     {
         self::$serverresulturl = $serverresulturl;
     }
+
     public static function getCallbackUrl()
     {
         return self::$callbackurl;
     }
+
     public function setCallbackUrl($callbackurl)
     {
         self::$callbackurl = $callbackurl;
     }
+
     public static function getProcessUrl()
     {
         return self::$processurl;
     }
+
     public function setProcessUrl($processurl)
     {
         self::$processurl = $processurl;
     }
+
     public static function getPaymentFormResultHandler()
     {
         return self::$paymentformresulthandler;
     }
+
     public function setPaymentFormResultHandler($paymentformresulthandler)
     {
         self::$paymentformresulthandler = $paymentformresulthandler;
@@ -177,14 +193,17 @@ class PaymentHelper
     {
         return self::$resultdeliverymethod;
     }
+
     public function setResultDeliveryMethod($resultdeliverymethod)
     {
         self::$resultdeliverymethod = $resultdeliverymethod;
     }
+
     public static function getTransactionType()
     {
         return self::$transactiontype;
     }
+
     public function setTransactionType($transactiontype)
     {
         self::$transactiontype = $transactiontype;
@@ -195,54 +214,67 @@ class PaymentHelper
     {
         return self::$echoavs;
     }
+
     public static function getEchoCv2()
     {
         return self::$echocv2;
     }
+
     public static function getEchoThreed()
     {
         return self::$echothreed;
     }
+
     public static function getEchoCardType()
     {
         return self::$echocardtype;
     }
+
     public static function getCv2Mandatory()
     {
         return self::$cv2mandatory;
     }
+
     public static function getAddress1Mandatory()
     {
         return self::$address1mandatory;
     }
+
     public static function getCityMandatory()
     {
         return self::$citymandatory;
     }
+
     public static function getPostcodeMandatory()
     {
         return self::$postcodemandatory;
     }
+
     public static function getStateMandatory()
     {
         return self::$statemandatory;
     }
+
     public static function getCountryMandatory()
     {
         return self::$countrymandatory;
     }
+
     public static function getPaymentFormsDisplaysResult()
     {
         return self::$paymentformsdisplaysresult;
     }
+
     public static function getServerResultUrlFormVariables()
     {
         return self::$serverresulturlformvariables;
     }
+
     public static function getServerResultUrlCookieVariables()
     {
         return self::$serverresulturlcookievariables;
     }
+
     public static function getServerResultUrlQueryStringVariables()
     {
         return self::$serverresulturlquerystringvariables;
@@ -252,7 +284,7 @@ class PaymentHelper
 
     #region Payzone logging
     /**
-    Payzone Logger Function - for information and debugging
+     * Payzone Logger Function - for information and debugging
      * @method Logger
      * @param  [String]       $type = 'info' or 'debug'
      * @param  [Object][Array][String] $data
@@ -263,7 +295,7 @@ class PaymentHelper
         $log_location = storage_path("/logs/payzone.log");
         if (self::getDebugMode()) {
             $datetime = date('Y-m-d H:i:s');
-            $trace    = debug_backtrace();
+            $trace = debug_backtrace();
             error_log("{$datetime} ~ {$trace[0]['file']} | {$trace[0]['line']} " . "\n", 3, $log_location);
             error_log(print_r('Debug - ' . $desc, true) . "\n", 3, $log_location);
             error_log(print_r($data, true) . "\n", 3, $log_location);
@@ -275,7 +307,7 @@ class PaymentHelper
     #region hashing functions
 
     /**
-    Generate Hash Function - for information and debugging
+     * Generate Hash Function - for information and debugging
      * @method generateHashDigest
      * @param  [String] - $StringToHash - string to be hashed and sent to gateway
      * @param  [String] - $key - PreSharedKey from gateway
@@ -309,7 +341,7 @@ class PaymentHelper
     }
 
     /**
-    Generate Hosted Payment Form Hash String Function - for information and debugging
+     * Generate Hosted Payment Form Hash String Function - for information and debugging
      * @method generateStringToHash_HostedForm
      * @param  [String] - $amt,$currencycode,$orderid,$transactiontype,$transactiondatetime,$callbackurl,$orderdesc,$customername,$address1,$address2,$address3,$address4,$city,$state,$postcode,$countrycode - varaiables to pass into string for hashing
      * @return [String] - $stringtohash - string payment object
@@ -322,7 +354,7 @@ class PaymentHelper
     }
 
     /**
-    Generate Transparent Payment Form Hash String Function - for information and debugging
+     * Generate Transparent Payment Form Hash String Function - for information and debugging
      * @method generateStringToHash_TransparentForm
      * @param  [String] - $amt,$currencycode,$orderid,$transactiontype,$transactiondatetime,,$orderdesc- variables to pass into string for hashing
      * @return [String] - $stringtohash - string payment object
@@ -335,7 +367,7 @@ class PaymentHelper
     }
 
     /**
-    Generate Transparent Payment Form Hash String Function - for information and debugging
+     * Generate Transparent Payment Form Hash String Function - for information and debugging
      * @method generateStringToHash_Transparent3dSecure
      * @param  [String] -$crossreference, $transactiondatetime, $pares - varaiables to pass into string for hashing
      * @return [String] - $stringtohash - string payment object
@@ -365,7 +397,7 @@ class PaymentHelper
     }
 
     /**
-    Generate Direct API 3d Hash String Function - for information and debugging
+     * Generate Direct API 3d Hash String Function - for information and debugging
      * @method generateStringToHash_Direct3d
      * @param  [String] - $md,$pares - variables to pass into string for hashing
      * @return [String] - $stringtohash - string payment object
@@ -382,7 +414,7 @@ class PaymentHelper
     #region validation functions
 
     /**
-    Validate POST response from Hosted Payment Form
+     * Validate POST response from Hosted Payment Form
      * @method validateResponseHosted
      * @param  [Array] - POST variables from gateway response
      * @param  [Array] - GET variables from gateway response
@@ -398,7 +430,7 @@ class PaymentHelper
     {
         $gw = (self::$resultdeliverymethod === 'POST') ? $post : $get;
         $errorOccured = false;
-        $errors       = array();
+        $errors = array();
         switch (self::$resultdeliverymethod) {
             case 'POST':
                 self::Logger($post, 'validateResponseHosted - $POST ARRAY - ');
@@ -430,7 +462,7 @@ class PaymentHelper
         if (isset($stringtohash)) {
             //Make sure that the stringtohash has been set, if this is not set it is most likely due to a setting change mid transaction
             self::Logger($stringtohash, 'validateResponseHosted - $stringtohash - ' . self::$resultdeliverymethod);
-            $hashdigest   = self::generateHashDigest($stringtohash, self::$presharedkey, self::$hashmethod);
+            $hashdigest = self::generateHashDigest($stringtohash, self::$presharedkey, self::$hashmethod);
             if ($hashdigest !== $gw["HashDigest"]) {
                 $errorOccured = true;
                 array_push($errors, "HashDigest does not match expected response");
@@ -451,7 +483,7 @@ class PaymentHelper
     }
 
     /**
-    Validate POST response from Hosted Gateway - Server
+     * Validate POST response from Hosted Gateway - Server
      * @method validateResponseHostedServer
      * @param  [Array] - POST variables from gateway response
      * @param  [Empty] - $hashdigest - variable by reference for return
@@ -465,10 +497,10 @@ class PaymentHelper
     public static function validateResponseHostedServer($gw, &$hashdigest, &$transactionresult, &$errors)
     {
         $errorOccured = false;
-        $errors       = array();
+        $errors = array();
         //Generate the string to hash - ensuring fields sent back from gateway match expected values
         $StringToHash = "MerchantID=" . self::$merchantid . "&Password=" . self::$merchantpassword . "&StatusCode=0&Message=" . $gw['Message'] . "&PreviousStatusCode=" . $gw['PreviousStatusCode'] . "&PreviousMessage=" . $gw['PreviousMessage'] . "&CrossReference=" . $gw['CrossReference'] . "&AddressNumericCheckResult=" . $gw['AddressNumericCheckResult'] . "&PostCodeCheckResult=" . $gw['PostCodeCheckResult'] . "&CV2CheckResult=" . $gw['CV2CheckResult'] . "&ThreeDSecureAuthenticationCheckResult=" . $gw['ThreeDSecureAuthenticationCheckResult'] . "&CardType=" . $gw['CardType'] . "&CardClass=" . $gw['CardClass'] . "&CardIssuer=" . $gw['CardIssuer'] . "&CardIssuerCountryCode=" . $gw['CardIssuerCountryCode'] . "&Amount=" . $gw['Amount'] . "&CurrencyCode=" . $gw['CurrencyCode'] . "&OrderID=" . $gw['OrderID'] . "&TransactionType=" . $gw['TransactionType'] . "&TransactionDateTime=" . $gw['TransactionDateTime'] . "&OrderDescription=" . $gw['OrderDescription'] . "&CustomerName=" . $gw['CustomerName'] . "&Address1=" . $gw['Address1'] . "&Address2=" . $gw['Address2'] . "&Address3=" . $gw['Address3'] . "&Address4=" . $gw['Address4'] . "&City=" . $gw['City'] . "&State=" . $gw['State'] . "&PostCode=" . $gw['PostCode'] . "&CountryCode=" . $gw['CountryCode'] . "";
-        $hashdigest   = self::generateHashDigest($StringToHash, self::$presharedkey, self::$hashmethod);
+        $hashdigest = self::generateHashDigest($StringToHash, self::$presharedkey, self::$hashmethod);
         if ($hashdigest !== $gw["HashDigest"] && $gw['StatusCode'] === 0) {
             $errorOccured = true;
             array_push($errors, "HashDigest does not match expected response");
@@ -482,9 +514,8 @@ class PaymentHelper
     }
 
 
-
     /**
-    Validate POST response from Transparent Gateway
+     * Validate POST response from Transparent Gateway
      * @method validateResponseTransparent
      * @param  [Array] - POST variables from gateway response
      * @param  [Empty] - $hashdigest - variable by reference for return
@@ -497,8 +528,8 @@ class PaymentHelper
      */
     public static function validateResponseTransparent($gw, &$hashdigest, &$transactionresult, &$errors)
     {
-        $errorOccured     = false;
-        $errors           = array();
+        $errorOccured = false;
+        $errors = array();
         //Check whether 3d secure has been request or whether the results will need to be presented
         $transparentStage = ((isset($gw['PaREQ'])) ? "threeDSecureRequiredAuthentication" : "transactionResult");
         switch ($transparentStage) {
@@ -526,7 +557,7 @@ class PaymentHelper
     }
 
     /**
-    Validate POST response from Direct
+     * Validate POST response from Direct
      * @method validateResponseDirect
      * @param  [Array] - POST variables from gateway response
      * @param  [Empty] - $hashdigest - variable by reference for return
@@ -540,11 +571,11 @@ class PaymentHelper
     public static function validateResponseDirect($gw, &$hashdigest, &$transactionresult, &$errors)
     {
         $errorOccured = false;
-        $errors       = array();
+        $errors = array();
         extract($gw);
         //Generate the string to hash - ensuring fields sent back from gateway match expected values
         $StringToHash = "MerchantID=" . self::$merchantid . "&Password=" . self::$merchantpassword . "&Amount=$Amount&CurrencyCode=$CurrencyCode&OrderID=$OrderID&OrderDescription=$OrderDescription&TransactionDateTime=$TransactionDateTime";
-        $hashdigest   = self::generateHashDigest($StringToHash, self::$presharedkey, self::$hashmethod);
+        $hashdigest = self::generateHashDigest($StringToHash, self::$presharedkey, self::$hashmethod);
         if ($hashdigest !== $_SESSION['HashDigest']) {
             $errorOccured = true;
             array_push($errors, "HashDigest does not match expected response");
@@ -571,7 +602,7 @@ class PaymentHelper
     #region curl / api handling
 
     /**
-    getTransactionResultFromPaymentFormHandler Access payment form handler to retrieve results
+     * getTransactionResultFromPaymentFormHandler Access payment form handler to retrieve results
      * @method getTransactionResultFromPaymentFormHandler
      * @param  [String]                                     $CrossReference
      * @param  [Empty] - $transactionresult - variable by reference for return
@@ -581,7 +612,7 @@ class PaymentHelper
     public static function getTransactionResultFromPaymentFormHandler($CrossReference, &$TransactionResult)
     {
         $errorOccured = false;
-        $errorMsg     = array();
+        $errorMsg = array();
         try {
             // use curl to post the cross reference to the
             // payment form to query its status
@@ -601,9 +632,9 @@ class PaymentHelper
             }
             // read the response
             $curlResponse = curl_exec($cCURL);
-            $errorno      = curl_errno($cCURL);
-            $errormsg     = curl_error($cCURL);
-            $headerinfo   = curl_getinfo($cCURL);
+            $errorno = curl_errno($cCURL);
+            $errormsg = curl_error($cCURL);
+            $headerinfo = curl_getinfo($cCURL);
             curl_close($cCURL); //close curl connection
             if ($curlResponse === "" || !$curlResponse) {
                 $errorOccured = true;
@@ -635,7 +666,7 @@ class PaymentHelper
     }
 
     /**
-    Process Direct API payment request
+     * Process Direct API payment request
      * @method processDirectTransaction
      * @param  [String] -
      * @return [boolean] - false if transaction did not process correctly
@@ -643,17 +674,17 @@ class PaymentHelper
     public static function processDirectTransaction(&$transactionResult, &$errorMsg)
     {
 
-        $_SESSION['tp_order_id']=$_POST['OrderID'];
-        $_SESSION['tp_order_desc']=$_POST['OrderDescription'];
-        $_SESSION['tp_order_amount']=$_POST['Amount'];
-        $_SESSION['tp_order_type']=$_POST['TransactionType'];
-        $_SESSION['tp_order_currencycode']=$_POST['CurrencyCode'];
-        $_SESSION['tp_order_transactiondatetime']=$_POST['TransactionDateTime'];
-        $soapenv =self::soapEnvelope_DirectProcess($_POST['Amount'], $_POST['CurrencyCode'], $_POST['TransactionType'], $_POST['OrderID'], $_POST['OrderDescription'], $_POST['CardName'], $_POST['CV2'], $_POST['CardNumber'], $_POST['ExpiryDateMonth'], $_POST['ExpiryDateYear'], isset($_POST['StartDateMonth']) ? $_POST['StartDateMonth'] : "", isset($_POST['StartDateYear']) ? $_POST['StartDateYear'] : "", $_POST['Address1'], $_POST['Address2'], $_POST['Address3'], $_POST['Address4'], $_POST['City'], $_POST['State'], $_POST['PostCode']);
-        $orderarray= array("Amount" => $_POST["Amount"],"CurrencyCode" => $_POST["CurrencyCode"],"TransactionType" => $_POST["TransactionType"],"OrderID" => $_POST["OrderID"],"OrderDescription" => $_POST["OrderDescription"],"Address1" => $_POST["Address1"],"Address2" => $_POST["Address2"],"Address3" => $_POST["Address3"],"Address4" => $_POST["Address4"],"City" => $_POST["City"],"State" => $_POST["State"],"PostCode" => $_POST["PostCode"],);
+        $_SESSION['tp_order_id'] = $_POST['OrderID'];
+        $_SESSION['tp_order_desc'] = $_POST['OrderDescription'];
+        $_SESSION['tp_order_amount'] = $_POST['Amount'];
+        $_SESSION['tp_order_type'] = $_POST['TransactionType'];
+        $_SESSION['tp_order_currencycode'] = $_POST['CurrencyCode'];
+        $_SESSION['tp_order_transactiondatetime'] = $_POST['TransactionDateTime'];
+        $soapenv = self::soapEnvelope_DirectProcess($_POST['Amount'], $_POST['CurrencyCode'], $_POST['TransactionType'], $_POST['OrderID'], $_POST['OrderDescription'], $_POST['CardName'], $_POST['CV2'], $_POST['CardNumber'], $_POST['ExpiryDateMonth'], $_POST['ExpiryDateYear'], isset($_POST['StartDateMonth']) ? $_POST['StartDateMonth'] : "", isset($_POST['StartDateYear']) ? $_POST['StartDateYear'] : "", $_POST['Address1'], $_POST['Address2'], $_POST['Address3'], $_POST['Address4'], $_POST['City'], $_POST['State'], $_POST['PostCode']);
+        $orderarray = array("Amount" => $_POST["Amount"], "CurrencyCode" => $_POST["CurrencyCode"], "TransactionType" => $_POST["TransactionType"], "OrderID" => $_POST["OrderID"], "OrderDescription" => $_POST["OrderDescription"], "Address1" => $_POST["Address1"], "Address2" => $_POST["Address2"], "Address3" => $_POST["Address3"], "Address4" => $_POST["Address4"], "City" => $_POST["City"], "State" => $_POST["State"], "PostCode" => $_POST["PostCode"],);
 
         $errorOccured = false;
-        $errorMsg     = array();
+        $errorMsg = array();
         try {
             // use curl to post the cross reference to the
             // payment form to query its status
@@ -678,9 +709,9 @@ class PaymentHelper
             }
             // read the response
             $curlResponse = curl_exec($cCURL);
-            $errorno      = curl_errno($cCURL);
-            $errormsg     = curl_error($cCURL);
-            $headerinfo   = curl_getinfo($cCURL);
+            $errorno = curl_errno($cCURL);
+            $errormsg = curl_error($cCURL);
+            $headerinfo = curl_getinfo($cCURL);
             curl_close($cCURL); //close curl connection
             if ($curlResponse === "" || !$curlResponse) {
                 $errorOccured = true;
@@ -692,7 +723,7 @@ class PaymentHelper
                 $curlResponse = str_replace("<soap:Body>", "", $curlResponse);
                 $curlResponse = str_replace("</soap:Body>", "", $curlResponse);
                 $curlResponse = simplexml_load_string($curlResponse);
-                $statusCode =$curlResponse->CardDetailsTransactionResponse->CardDetailsTransactionResult->StatusCode ? $curlResponse->CardDetailsTransactionResponse->CardDetailsTransactionResult->StatusCode : 999;
+                $statusCode = $curlResponse->CardDetailsTransactionResponse->CardDetailsTransactionResult->StatusCode ? $curlResponse->CardDetailsTransactionResponse->CardDetailsTransactionResult->StatusCode : 999;
                 $xmlResponseArray = self::parseXmltoArray($curlResponse->CardDetailsTransactionResponse, $orderarray, 'direct');
                 switch ($statusCode) {
                     case 30:
@@ -727,17 +758,17 @@ class PaymentHelper
     }
 
     /**
-    Process Direct API payment 3d secure request
+     * Process Direct API payment 3d secure request
      * @method processDirect3DTransaction
      * @param  [String] -
      * @return [boolean] - false if transaction did not process correctly
      */
     public static function processDirect3DTransaction(&$transactionResult, &$errorMsg, $md, $pares)
     {
-        $orderarray= array("MD" => $md,"PaRes" => $pares);
-        $soapenv =self::soapEnvelope_Direct3DProcess($md, $pares);
+        $orderarray = array("MD" => $md, "PaRes" => $pares);
+        $soapenv = self::soapEnvelope_Direct3DProcess($md, $pares);
         $errorOccured = false;
-        $errorMsg     = array();
+        $errorMsg = array();
         try {
             // use curl to post the cross reference to the
             // payment form to query its status
@@ -758,9 +789,9 @@ class PaymentHelper
             }
             // read the response
             $curlResponse = curl_exec($cCURL);
-            $errorno      = curl_errno($cCURL);
-            $errormsg     = curl_error($cCURL);
-            $headerinfo   = curl_getinfo($cCURL);
+            $errorno = curl_errno($cCURL);
+            $errormsg = curl_error($cCURL);
+            $headerinfo = curl_getinfo($cCURL);
             curl_close($cCURL); //close curl connection
             if ($curlResponse === "" || !$curlResponse) {
                 $errorOccured = true;
@@ -771,7 +802,7 @@ class PaymentHelper
                 $curlResponse = str_replace("<soap:Body>", "", $curlResponse);
                 $curlResponse = str_replace("</soap:Body>", "", $curlResponse);
                 $curlResponse = simplexml_load_string($curlResponse);
-                $statusCode =$curlResponse->ThreeDSecureAuthenticationResponse->ThreeDSecureAuthenticationResult->StatusCode ? $curlResponse->ThreeDSecureAuthenticationResponse->ThreeDSecureAuthenticationResult->StatusCode : 999;
+                $statusCode = $curlResponse->ThreeDSecureAuthenticationResponse->ThreeDSecureAuthenticationResult->StatusCode ? $curlResponse->ThreeDSecureAuthenticationResponse->ThreeDSecureAuthenticationResult->StatusCode : 999;
                 $xmlResponseArray = self::parseXmltoArray($curlResponse->ThreeDSecureAuthenticationResponse, $orderarray, '3dsecure');
 
                 switch ($statusCode) {
@@ -808,17 +839,17 @@ class PaymentHelper
 
 
     /**
-    Process Refund secure request
+     * Process Refund secure request
      * @method processRefundTransaction
      * @param  [String] -
      * @return [boolean] - false if transaction did not process correctly
      */
-    public static function processRefundTransaction(&$transactionResult, &$errorMsg,$crossreference, $amount,$orderid)
+    public static function processRefundTransaction(&$transactionResult, &$errorMsg, $crossreference, $amount, $orderid)
     {
-        $orderarray= array("OriginalCrossReference" => $crossreference,"RefundAmount" => $amount,"OrderID" => $orderid);
-        $soapenv =self::soapEnvelope_RefundProcess($crossreference, $amount,$orderid);
+        $orderarray = array("OriginalCrossReference" => $crossreference, "RefundAmount" => $amount, "OrderID" => $orderid);
+        $soapenv = self::soapEnvelope_RefundProcess($crossreference, $amount, $orderid);
         $errorOccured = false;
-        $errorMsg     = array();
+        $errorMsg = array();
         try {
             // use curl to post the cross reference to the
             // payment form to query its status
@@ -839,9 +870,9 @@ class PaymentHelper
             }
             // read the response
             $curlResponse = curl_exec($cCURL);
-            $errorno      = curl_errno($cCURL);
-            $errormsg     = curl_error($cCURL);
-            $headerinfo   = curl_getinfo($cCURL);
+            $errorno = curl_errno($cCURL);
+            $errormsg = curl_error($cCURL);
+            $headerinfo = curl_getinfo($cCURL);
             curl_close($cCURL); //close curl connection
             if ($curlResponse === "" || !$curlResponse) {
                 $errorOccured = true;
@@ -852,7 +883,7 @@ class PaymentHelper
                 $curlResponse = str_replace("<soap:Body>", "", $curlResponse);
                 $curlResponse = str_replace("</soap:Body>", "", $curlResponse);
                 $curlResponse = simplexml_load_string($curlResponse);
-                $statusCode =$curlResponse->CrossReferenceTransactionResponse->CrossReferenceTransactionResult->StatusCode ? $curlResponse->CrossReferenceTransactionResponse->CrossReferenceTransactionResult->StatusCode : 999;
+                $statusCode = $curlResponse->CrossReferenceTransactionResponse->CrossReferenceTransactionResult->StatusCode ? $curlResponse->CrossReferenceTransactionResponse->CrossReferenceTransactionResult->StatusCode : 999;
                 $xmlResponseArray = self::parseXmltoArray($curlResponse->CrossReferenceTransactionResponse, $orderarray, 'refund');
 
                 switch ($statusCode) {
@@ -892,7 +923,7 @@ class PaymentHelper
     #region helper functions
 
     /**
-    getSiteUrl Function - for information and debugging
+     * getSiteUrl Function - for information and debugging
      * @method getSiteUrl
      * @return [String] - $siteurl - https/http url for site root
      */
@@ -909,13 +940,13 @@ class PaymentHelper
         } elseif (isset($_SERVER['SERVER_PORT']) && ('443' == $_SERVER['SERVER_PORT'])) {
             $protocol = 'https';
         }
-        $site =  $_SERVER['HTTP_HOST'] . str_replace("\\", "/", dirname($_SERVER['REQUEST_URI']));
+        $site = $_SERVER['HTTP_HOST'] . str_replace("\\", "/", dirname($_SERVER['REQUEST_URI']));
 
         return "$protocol://$site";
     }
 
     /**
-    parseResponseStringToArray parse response string from gateway into an array
+     * parseResponseStringToArray parse response string from gateway into an array
      * @method parseResponseStringToArray
      * @param  [String]                                     $string
      * @return [Boolean]                                     [False on error]
@@ -924,7 +955,7 @@ class PaymentHelper
     {
         // break the reponse into an array
         // first break the variables up using the "&" delimter
-        $tmpVars    = explode("&", $string);
+        $tmpVars = explode("&", $string);
         $parsedVars = array();
         foreach ($tmpVars as $var) {
             // for each variable, split is again on the "=" delimiter to give name/value pairs
@@ -942,7 +973,7 @@ class PaymentHelper
 
 
     /**
-    parseResponseStringToArray parse response string from gateway into an array
+     * parseResponseStringToArray parse response string from gateway into an array
      * @method parseResponseStringToArray
      * @param  [String]                                     $string
      * @return [Boolean]                                     [False on error]
@@ -981,97 +1012,96 @@ class PaymentHelper
 
     private static function soapEnvelope_DirectProcess($amount, $currencycode, $transactiontype, $orderid, $orderdesc, $cardname, $cv2, $cardnumber, $expmonth, $expyear, $startmonth, $startyear, $address1, $address2, $address3, $address4, $city, $state, $postcode)
     {
-        $useragent=isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
+        $useragent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
 
-        $soap = "<?xml version='1.0' encoding='utf-8' ?>".
-            "<soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>".
-            "<soap:Body>".
-            "<CardDetailsTransaction xmlns='https://www.thepaymentgateway.net/'>".
-            "<PaymentMessage>".
-            "<MerchantAuthentication Password='".self::$merchantpassword."' MerchantID='".self::$merchantid."'/>".
-            "<TransactionDetails Amount='$amount' CurrencyCode='$currencycode'><MessageDetails TransactionType='$transactiontype'/>".
-            "<TransactionControl>".
-            "<ThreeDSecureOverridePolicy>true</ThreeDSecureOverridePolicy>".
-            "<DuplicateDelay>60</DuplicateDelay>".
-            "<EchoCardType>".self::$echocardtype."</EchoCardType>".
-            "<EchoAVSCheckResult>".self::$echoavs."</EchoAVSCheckResult>".
-            "<EchoCV2CheckResult>".self::$echocv2."</EchoCV2CheckResult>".
-            "<EchoThreeDSecureAuthenticationCheckResult>".self::$echothreed."</EchoThreeDSecureAuthenticationCheckResult>".
-            "<EchoAmountReceived>false</EchoAmountReceived>".
-            "</TransactionControl>".
-            "<ThreeDSecureBrowserDetails>".
-            "<AcceptHeaders>*/*</AcceptHeaders>".
-            "<UserAgent>$useragent</UserAgent>".
-            "</ThreeDSecureBrowserDetails>".
-            "<OrderID>$orderid</OrderID>".
-            "<OrderDescription>$orderdesc</OrderDescription>".
-            "</TransactionDetails>".
-            "<CardDetails>".
-            "<CardName>$cardname</CardName>".
-            "<CV2>$cv2</CV2>".
-            "<CardNumber>$cardnumber</CardNumber>".
-            "<ExpiryDate Month='$expmonth' Year='$expyear'/>".
-            "<StartDate Month='$startmonth' Year='$startyear'/>".
-            "</CardDetails>".
-            "<CustomerDetails>".
-            "<BillingAddress>".
-            "<Address1>$address1</Address1>".
-            "<Address2>$address2</Address2>".
-            "<Address3>$address3</Address3>".
-            "<Address4>$address4</Address4>".
-            "<City>$city</City>".
-            "<State>$state</State>".
-            "<PostCode>$postcode</PostCode>".
-            "</BillingAddress>".
-            "</CustomerDetails>".
-            "</PaymentMessage>".
-            "</CardDetailsTransaction>".
-            "</soap:Body>".
+        $soap = "<?xml version='1.0' encoding='utf-8' ?>" .
+            "<soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>" .
+            "<soap:Body>" .
+            "<CardDetailsTransaction xmlns='https://www.thepaymentgateway.net/'>" .
+            "<PaymentMessage>" .
+            "<MerchantAuthentication Password='" . self::$merchantpassword . "' MerchantID='" . self::$merchantid . "'/>" .
+            "<TransactionDetails Amount='$amount' CurrencyCode='$currencycode'><MessageDetails TransactionType='$transactiontype'/>" .
+            "<TransactionControl>" .
+            "<ThreeDSecureOverridePolicy>true</ThreeDSecureOverridePolicy>" .
+            "<DuplicateDelay>60</DuplicateDelay>" .
+            "<EchoCardType>" . self::$echocardtype . "</EchoCardType>" .
+            "<EchoAVSCheckResult>" . self::$echoavs . "</EchoAVSCheckResult>" .
+            "<EchoCV2CheckResult>" . self::$echocv2 . "</EchoCV2CheckResult>" .
+            "<EchoThreeDSecureAuthenticationCheckResult>" . self::$echothreed . "</EchoThreeDSecureAuthenticationCheckResult>" .
+            "<EchoAmountReceived>false</EchoAmountReceived>" .
+            "</TransactionControl>" .
+            "<ThreeDSecureBrowserDetails>" .
+            "<AcceptHeaders>*/*</AcceptHeaders>" .
+            "<UserAgent>$useragent</UserAgent>" .
+            "</ThreeDSecureBrowserDetails>" .
+            "<OrderID>$orderid</OrderID>" .
+            "<OrderDescription>$orderdesc</OrderDescription>" .
+            "</TransactionDetails>" .
+            "<CardDetails>" .
+            "<CardName>$cardname</CardName>" .
+            "<CV2>$cv2</CV2>" .
+            "<CardNumber>$cardnumber</CardNumber>" .
+            "<ExpiryDate Month='$expmonth' Year='$expyear'/>" .
+            "<StartDate Month='$startmonth' Year='$startyear'/>" .
+            "</CardDetails>" .
+            "<CustomerDetails>" .
+            "<BillingAddress>" .
+            "<Address1>$address1</Address1>" .
+            "<Address2>$address2</Address2>" .
+            "<Address3>$address3</Address3>" .
+            "<Address4>$address4</Address4>" .
+            "<City>$city</City>" .
+            "<State>$state</State>" .
+            "<PostCode>$postcode</PostCode>" .
+            "</BillingAddress>" .
+            "</CustomerDetails>" .
+            "</PaymentMessage>" .
+            "</CardDetailsTransaction>" .
+            "</soap:Body>" .
             "</soap:Envelope>";
 
         return $soap;
     }
-
 
 
     private static function soapEnvelope_Direct3DProcess($md, $pares)
     {
-        $soap = "<?xml version='1.0' encoding='UTF-8'?>".
-            "<soap:Envelope xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>".
-            "<soap:Body>".
-            "<ThreeDSecureAuthentication xmlns='https://www.thepaymentgateway.net/'>".
-            "<ThreeDSecureMessage>".
-            "<ThreeDSecureInputData CrossReference='$md'>".
-            "<PaRES>$pares</PaRES>".
-            "</ThreeDSecureInputData>".
-            "<MerchantAuthentication Password='".self::$merchantpassword."' MerchantID='".self::$merchantid."'/>".
-            "</ThreeDSecureMessage>".
-            "</ThreeDSecureAuthentication>".
-            "</soap:Body>".
+        $soap = "<?xml version='1.0' encoding='UTF-8'?>" .
+            "<soap:Envelope xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>" .
+            "<soap:Body>" .
+            "<ThreeDSecureAuthentication xmlns='https://www.thepaymentgateway.net/'>" .
+            "<ThreeDSecureMessage>" .
+            "<ThreeDSecureInputData CrossReference='$md'>" .
+            "<PaRES>$pares</PaRES>" .
+            "</ThreeDSecureInputData>" .
+            "<MerchantAuthentication Password='" . self::$merchantpassword . "' MerchantID='" . self::$merchantid . "'/>" .
+            "</ThreeDSecureMessage>" .
+            "</ThreeDSecureAuthentication>" .
+            "</soap:Body>" .
             "</soap:Envelope>";
 
         return $soap;
     }
 
-    private static function soapEnvelope_RefundProcess($crossreference, $amount,$orderid)
+    private static function soapEnvelope_RefundProcess($crossreference, $amount, $orderid)
     {
-        $soap = "<?xml version='1.0' encoding='utf-8' ?>".
-            "<soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>".
-            "<soap:Body>".
-            "<CrossReferenceTransaction xmlns='https://www.thepaymentgateway.net/'>".
-            "<PaymentMessage>".
-            "<TransactionDetails Amount='$amount' CurrencyCode='826'>".
-            "<MessageDetails TransactionType='REFUND' CrossReference='$crossreference' />".
-            "<TransactionControl>".
-            "<ThreeDSecureOverridePolicy>true</ThreeDSecureOverridePolicy>".
-            "<DuplicateDelay>60</DuplicateDelay>".
-            "</TransactionControl>".
-            "<OrderID>$orderid</OrderID>".
-            "</TransactionDetails>".
-            "<MerchantAuthentication Password='".self::$merchantpassword."' MerchantID='".self::$merchantid."'/>".
-            "</PaymentMessage>".
-            "</CrossReferenceTransaction>".
-            "</soap:Body>".
+        $soap = "<?xml version='1.0' encoding='utf-8' ?>" .
+            "<soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>" .
+            "<soap:Body>" .
+            "<CrossReferenceTransaction xmlns='https://www.thepaymentgateway.net/'>" .
+            "<PaymentMessage>" .
+            "<TransactionDetails Amount='$amount' CurrencyCode='826'>" .
+            "<MessageDetails TransactionType='REFUND' CrossReference='$crossreference' />" .
+            "<TransactionControl>" .
+            "<ThreeDSecureOverridePolicy>true</ThreeDSecureOverridePolicy>" .
+            "<DuplicateDelay>60</DuplicateDelay>" .
+            "</TransactionControl>" .
+            "<OrderID>$orderid</OrderID>" .
+            "</TransactionDetails>" .
+            "<MerchantAuthentication Password='" . self::$merchantpassword . "' MerchantID='" . self::$merchantid . "'/>" .
+            "</PaymentMessage>" .
+            "</CrossReferenceTransaction>" .
+            "</soap:Body>" .
             "</soap:Envelope>";
 
         return $soap;
@@ -1085,7 +1115,7 @@ class PaymentHelper
     #region TransactionResults
 
     /**
-    createTransactionResultObject create the transaction result object
+     * createTransactionResultObject create the transaction result object
      * @method createTransactionResultObject
      * @param  [Array] - $transactionResultArray
      * @param  [Empty] - $transactionresult - variable by reference for return

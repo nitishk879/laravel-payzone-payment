@@ -35,14 +35,15 @@ class PayzoneController extends Controller
             return redirect('/')->with("error", "You don't have any product in your cart");
         }
 
-        $order = $this->generateOrder($checkout);
+        $customer = Customer::latest()->first();
+
+        $order = $this->generateOrder($checkout, $customer);
 
         return view('Payzone::payzone', compact('order'));
     }
 
     public function process(Request $request)
     {
-
         $integrationType = $this->integrationType;
         $paymentBuilder = new PaymentBuilder;
 
@@ -88,8 +89,9 @@ class PayzoneController extends Controller
                         $request->TransactionDateTime,
                         $request->OrderDescription
                     );
-                    //Process direct API Transaction
                     $processed = PaymentHelper::processDirectTransaction($transactionResult, $errorMsg);
+                    $customer = $this->newCustomer($request);
+                    $this->generateOrder($request, $customer);
                 }
                 elseif(isset($request->PaRes)) {
                     $stringToHash = PaymentHelper::generateStringToHash_Direct3d($request->MD, $request->PaRes);
@@ -162,8 +164,8 @@ class PayzoneController extends Controller
                     $validated = $paymentHelper::validateResponseDirect($_POST, $hashdigest, $transactionresult, $errors);
                     if ($validated) {
                         $paymentBuilder->passToMerchantSystem($transactionresult);
-                        $customer = $this->newCustomer($request);
-                        $this->updateOrCreateOrder($request, $customer);
+                        // Port 4430 does not send requests accordingly.
+                        $this->updateOrCreateOrder($request);
                         $request->session()->forget('cart');
                         $request->session()->flush();
                     }
@@ -229,25 +231,25 @@ class PayzoneController extends Controller
     /**
      * Generate New order
      * @param $order
+     * @param $customer
      *
      * @return Order
      */
-    public function generateOrder($order)
+    public function generateOrder($order, $customer)
     {
-        $description = collect($order)->flatten(1)->values()->flatten()->whereNotNull('title')->values();
 
         return Order::firstOrCreate([
-            'total_price' => $order->totalPrice,
-            'order_details' => $description->implode('title', ', '),
+            'total_price' => $order->Amount,
+            'customer_id'   => $customer->id,
         ],
             [
-                'order_status' => 'process',
-                'order_price' => $order->totalPrice*100,
+                'order_status' => 'in-process',
+                'order_price' => $order->Amount,
                 'order_type' => 'buy',
-                'total_price' => $order->totalPrice,
-                'order_details' => $description->implode('title', ', '),
+                'total_price' => $order->Amount/100,
+                'order_details' => $order->OrderDescription,
                 'cross_reference' => 'cross_reference',
-                'customer_id' => 1
+                'customer_id' => $customer->id
             ]);
     }
 
@@ -262,12 +264,12 @@ class PayzoneController extends Controller
         $firstName = strstr($customer->CustomerName, ' ', true) ?? null;
         $lastName = strstr($customer->CustomerName, ' ', false) ?? null;
         return Customer::firstOrCreate([
-            'first_name' => $firstName,
+            'email' => $customer->EmailAddress,
             'address_line_1' => $customer->Address1,
         ],
             [
                 'first_name' => $firstName ?? $customer->CustomerName,
-                'last_name' => $lastName ?? null,
+                'last_name' => trim($lastName) ?? null,
                 'email' => $customer->EmailAddress ?? null,
                 'phone' => $customer->PhoneNumber ?? null,
                 'address_line_1' => $customer->Address1,
@@ -276,17 +278,17 @@ class PayzoneController extends Controller
                 'county' => $customer->State,
                 'postal_code' => $customer->PostCode,
                 'country' => $customer->CountryCode,
-                'payment_method'    => $customer->Direct ?? 'direct'
+                'payment_method'    => 'direct'
             ]);
     }
 
     /**
      * Add or Update Order
-     * @param $result
+     * @param $postBackRequest
      * @param $customer
      *
     */
-    public function updateOrCreateOrder($result, $customer){
+    public function updateOrCreateOrder($postBackRequest){
         $status = collect(array(
             "SUCCESSFUL"        => 0,
             "THREEDREQUIRED"    => 3,
@@ -296,23 +298,38 @@ class PayzoneController extends Controller
             "ERROR"             => 30,
         ));
 
-        Order::updateOrCreate([
-            'id' => $result->OrderID
-        ],
-            [
-                'cross_reference' => $result->CrossReference,
-                'order_price' => $result->Amount,
-                'total_price' => $result->Amount/100,
-                'order_type'    => 'buy',
-                'order_status' => $status->search($result->StatusCode),
-                'order_details' => $result->OrderDescription,
-                'customer_id'   => $customer->id
-            ]);
+        $order = Order::find($postBackRequest->OrderID);
 
-        $order = Order::find($result->OrderID);
+        $order->cross_reference  = $postBackRequest->CrossReference;
+        $order->order_status    = $status->search($postBackRequest->StatusCode);
+
+        $order->save();
 
         Mail::to(config('mail.from.address'))->send(new OrderShipped($order));
 
 //        event(new OrderShipped($order));
+    }
+
+    /**
+     * Update customer Id in Order
+     * @param $order
+     * @param $customer
+    */
+
+    public function updateCustomerIdInOrder($order, $customer){
+        $order_id = $order->OrderId;
+
+        return Order::updateOrCreate([
+            'id' => $order_id
+        ],
+            [
+                'cross_reference' => '',
+                'order_price' => $order->Amount,
+                'total_price' => $order->Amount / 100,
+                'order_type' => 'buy',
+                'order_status' => 'initiated',
+                'order_details' => $order->OrderDescription,
+                'customer_id' => $customer->id
+            ]);
     }
 }
