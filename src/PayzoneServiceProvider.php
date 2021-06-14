@@ -45,7 +45,6 @@ class PayzoneServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/style.css' => public_path('vendor/payzone/style.css'),
                 __DIR__.'/loading.svg' => public_path('vendor/payzone/loading.svg'),
-                __DIR__.'/cacert.pem' => public_path('vendor/payzone/cacert.pem'),
             ], 'public');
 
         }

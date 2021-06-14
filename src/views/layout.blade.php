@@ -7,7 +7,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href='{{ asset("/vendor/Payzone/style.css") }}'/>
+    <link rel="stylesheet" type="text/css" href='{{ asset("/vendor/payzone/style.css") }}'/>
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100" id="app">
@@ -20,8 +20,6 @@
         @yield('content')
     </main>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
 @yield('scripts')
 </body>
 </html>

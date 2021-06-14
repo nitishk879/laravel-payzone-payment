@@ -81,6 +81,9 @@ class PayzoneController extends Controller
                 break;
             case 'direct':
                 if(!isset($request->PaRes) && !isset($request->PaReq)) {
+                    /**
+                     * PaymentHelper::gnerateStringToHash_DirectForm
+                    */
                     $stringToHash = PaymentHelper::generateStringToHash_DirectForm(
                         $request->Amount,
                         $request->CurrencyCode,
@@ -239,7 +242,7 @@ class PayzoneController extends Controller
     {
 
         return Order::firstOrCreate([
-            'total_price' => $order->Amount,
+            'order_price' => $order->Amount,
             'customer_id'   => $customer->id,
         ],
             [
@@ -274,6 +277,8 @@ class PayzoneController extends Controller
                 'phone' => $customer->PhoneNumber ?? null,
                 'address_line_1' => $customer->Address1,
                 'address_line_2' => $customer->Address2,
+                'address_line_3' => $customer->Address3 ?? '',
+                'address_line_4' => $customer->Address4 ?? '',
                 'city' => $customer->City,
                 'county' => $customer->State,
                 'postal_code' => $customer->PostCode,
@@ -307,7 +312,6 @@ class PayzoneController extends Controller
 
         Mail::to(config('mail.from.address'))->send(new OrderShipped($order));
 
-//        event(new OrderShipped($order));
     }
 
     /**
