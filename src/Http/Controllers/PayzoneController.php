@@ -35,15 +35,12 @@ class PayzoneController extends Controller
             return redirect('/')->with("error", "You don't have any product in your cart");
         }
 
-        $customer = Customer::latest()->first();
-
-        $order = $this->generateOrder($checkout, $customer);
-
-        return view('Payzone::payzone', compact('order'));
+        return view('Payzone::payzone', compact('checkout'));
     }
 
     public function process(Request $request)
     {
+
         $integrationType = $this->integrationType;
         $paymentBuilder = new PaymentBuilder;
 
@@ -81,9 +78,6 @@ class PayzoneController extends Controller
                 break;
             case 'direct':
                 if(!isset($request->PaRes) && !isset($request->PaReq)) {
-                    /**
-                     * PaymentHelper::gnerateStringToHash_DirectForm
-                    */
                     $stringToHash = PaymentHelper::generateStringToHash_DirectForm(
                         $request->Amount,
                         $request->CurrencyCode,
