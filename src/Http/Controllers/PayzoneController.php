@@ -29,13 +29,29 @@ class PayzoneController extends Controller
 
     public function payment(Request $request)
     {
+        $request->validate([
+            'OrderID'  => 'required',
+            'Amount'  => 'required',
+            'OrderDescription'  => 'required',
+            'CustomerName'  => 'required',
+            'EmailAddress'  => 'required|email',
+            'PhoneNumber'  => 'required|min:10|max:14',
+            'Address1'  => 'required',
+            'Address2'  => 'nullable',
+            'Address3'  => 'nullable',
+            'Address4'  => 'nullable',
+            'City'  => 'required',
+            'State'  => 'required',
+            'PostCode'  => 'required',
+            'CountryCode'  => 'required',
+        ]);
         $checkout = $request->session()->has('cart') ? $request->session()->get('cart') : '';
-
         if($checkout==null){
             return redirect('/')->with("error", "You don't have any product in your cart");
         }
-
-        return view('Payzone::payzone', compact('checkout'));
+        $customer = $this->newCustomer($request);
+        $order = $this->generateOrder($request, $customer);
+        return view('Payzone::payzone', compact('order'));
     }
 
     public function process(Request $request)
@@ -87,8 +103,6 @@ class PayzoneController extends Controller
                         $request->OrderDescription
                     );
                     $processed = PaymentHelper::processDirectTransaction($transactionResult, $errorMsg);
-                    $customer = $this->newCustomer($request);
-                    $this->generateOrder($request, $customer);
                 }
                 elseif(isset($request->PaRes)) {
                     $stringToHash = PaymentHelper::generateStringToHash_Direct3d($request->MD, $request->PaRes);

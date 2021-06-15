@@ -1,6 +1,6 @@
 {
     "name": "svodya/payzone",
-    "description": "This package is payment integration for laravel6/7 users. This is payment gateway library for UK clients.",
+    "description": "This package is payment integration for laravel7 users.",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
