@@ -4,7 +4,7 @@
 @endsection
 
 @php $order = \Svodya\Payzone\Models\Order::latest()->first();
-$description = collect($checkout->items)->flatten()->whereNotNull('title') ?? collect($checkout->items)->flatten()->whereNotNull('name');
+$description = $checkout ? collect($checkout->items)->flatten()->whereNotNull('title') : collect($cart->items)->flatten(1)->whereNotNull('*.items');
 @endphp
 
 @section('content')
@@ -22,7 +22,7 @@ $description = collect($checkout->items)->flatten()->whereNotNull('title') ?? co
                     </div>
                     <div class="col-span-6 sm:col-span-6 lg:col-span-6">
                         <label for="OrderDescription" class="block text-sm font-medium text-gray-700">Description</label>
-                        <input type="text" readonly name="OrderDescription" id="OrderDescription" value="{{ $description->implode('title', ', ') ?? $description->implode('name', ', ') ?? 'Product was purchased' }}" autocomplete="order-description" class="mt-1 text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                        <input type="text" readonly name="OrderDescription" id="OrderDescription" value="@isset($checkout){{$description->implode('title', ', ') ?? "Product Purchased" }} @else @foreach($description as $desc) {{ $desc['name'] ?? '' }} @isset($desc['model']) {{  $desc['model']['repair_name'] ?? '' }} @endisset @endforeach @endisset" autocomplete="order-description" class="mt-1 text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <input type="hidden" name="Amount" id="Amount" value="{{ $checkout->totalPrice*100 }}">
                     <input type="hidden" name="CurrencyCode" id="CurrencyCode" value="{{ config('payzone.currencyCode') }}">
