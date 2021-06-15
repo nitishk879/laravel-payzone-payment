@@ -11,14 +11,17 @@
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100" id="app">
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            @yield('header')
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <div>
+                <img class="mx-auto h-12 w-auto" src="{{ asset("images/logo.png") }}" alt="{{ config('app.name') }}">
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    @yield('header')
+                </h2>
+            </div>
+            @yield('content')
         </div>
-    </header>
-    <main>
-        @yield('content')
-    </main>
+    </div>
 </div>
 @yield('scripts')
 </body>
