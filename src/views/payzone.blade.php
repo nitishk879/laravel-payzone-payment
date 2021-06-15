@@ -2,6 +2,11 @@
 @section('header')
     {{ __("First example") }}
 @endsection
+
+@php $order = \Svodya\Payzone\Models\Order::latest()->first();
+$description = collect($checkout->items)->flatten()->whereNotNull('title');
+@endphp
+
 @section('content')
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div class="mt-10 sm:mt-0">
@@ -11,19 +16,19 @@
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6 sm:col-span-6 lg:col-span-2">
                                 <label for="OrderID" class="block text-sm font-medium text-gray-700">Order Id</label>
-                                <input type="text" readonly name="OrderID" id="OrderID" value="{{ $order->id ?? '' }}" autocomplete="order-id" class="mt-1 text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" readonly name="OrderID" id="OrderID" value="{{ $order ? $order->id+1 : 1 }}" autocomplete="order-id" class="mt-1 text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             <div class="col-span-6 sm:col-span-6 lg:col-span-2">
                                 <label for="Amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                                <input type="text" readonly id="Amount" value="{{ $order->total_price ?? '' }}" autocomplete="amount" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" readonly id="Amount" value="{{ $checkout->totalPrice ?? '' }}" autocomplete="amount" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                             <div class="col-span-6 sm:col-span-6 lg:col-span-2">
                                 <label for="OrderDescription" class="block text-sm font-medium text-gray-700">Description</label>
-                                <input type="text" readonly name="OrderDescription" id="OrderDescription" value="{{ $order->order_details ?? 'Product was purchased' }}" autocomplete="order-description" class="mt-1 text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" readonly name="OrderDescription" id="OrderDescription" value="{{ $description->implode('title', ', ') ?? 'Product was purchased' }}" autocomplete="order-description" class="mt-1 text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
-                            <input type="hidden" name="Amount" id="Amount" value="{{ $order->order_price }}">
+                            <input type="hidden" name="Amount" id="Amount" value="{{ $checkout->totalPrice*100 }}">
                             <input type="hidden" name="CurrencyCode" id="CurrencyCode" value="{{ config('payzone.currencyCode') }}">
-                            <input type="hidden" name="TransactionDateTime" id="TransactionDateTime" value="{{ $order->created_at }}">
+                            <input type="hidden" name="TransactionDateTime" id="TransactionDateTime" value="{{ today() }}">
                             <input type="hidden" name="TransactionType" id="TransactionType" value="{{ config('payzone.transactionType') }}">
                         </div>
                     </div>
