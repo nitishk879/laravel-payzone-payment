@@ -124,39 +124,40 @@ To publish Assets
 Here is two sample card details provided by payzone or Take payments for test purpose.
 
 Test card details:
-{
-  "test1": {
-    "customername": "Geoff Wayne",
-    "address1": "113 Broad Street West",
-    "address2": "",
-    "address3": "",
-    "address4": "",
-    "city": "Oldpine",
-    "state": "Strongbarrow",
-    "postcode": "SB42 1SX",
-    "countrycode": "826",
 
-    "cardname": "Geoff Wayne",
-    "cardnumber": "4976350000006891",
-    "cv2": "341",
-    "expirydatemonth": "01",
-    "expirydateyear": "25"
-  },
-  "test2": {
-    "customername": "John watson",
-    "address1": "32 Mulberry Street",
-    "address2": "",
-    "address3": "",
-    "address4": "",
-    "city": "East fort",
-    "state": "Voiletdell",
-    "postcode": "VL14 8PA",
-    "countrycode": "826",
-
-    "cardname": "John Watson",
-    "cardnumber": "4976000000003436",
-    "cv2": "452",
-    "expirydatemonth": "01",
-    "expirydateyear": "25"
-  }
-}
+    {
+      "test1": {
+        "customername": "Geoff Wayne",
+        "address1": "113 Broad Street West",
+        "address2": "",
+        "address3": "",
+        "address4": "",
+        "city": "Oldpine",
+        "state": "Strongbarrow",
+        "postcode": "SB42 1SX",
+        "countrycode": "826",
+    
+        "cardname": "Geoff Wayne",
+        "cardnumber": "4976350000006891",
+        "cv2": "341",
+        "expirydatemonth": "01",
+        "expirydateyear": "25"
+      },
+      "test2": {
+        "customername": "John watson",
+        "address1": "32 Mulberry Street",
+        "address2": "",
+        "address3": "",
+        "address4": "",
+        "city": "East fort",
+        "state": "Voiletdell",
+        "postcode": "VL14 8PA",
+        "countrycode": "826",
+    
+        "cardname": "John Watson",
+        "cardnumber": "4976000000003436",
+        "cv2": "452",
+        "expirydatemonth": "01",
+        "expirydateyear": "25"
+      }
+    }
